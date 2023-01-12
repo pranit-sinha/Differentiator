@@ -114,6 +114,7 @@ print("------------------------------------------")
 
 loaded_model = load_model(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models/dense121_01.h5')
 outcomes = loaded_model.predict(valid_generator)
+target_names = ['Cell Space','WhiteSpace']
 y_pred = np.argmax(outcomes, axis=1)
 # confusion matrix
 confusion = confusion_matrix(valid_generator.classes, y_pred)
@@ -125,11 +126,10 @@ plt.ylabel('True Label')
 plt.tight_layout()
 plt.savefig(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models/Confusion_matrix.jpg')
 
-conf_df = pd.DataFrame(confusion, index = ['wdoscc','mdoscc','pdoscc'], columns = ['wdoscc','mdoscc','pdoscc'])
+conf_df = pd.DataFrame(confusion, index = target_names, columns = target_names)
 conf_df.to_csv(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models/Confusion_matrix.csv')
 
 # classification report
-target_names = ['Cell Space','WhiteSpace']
 report = classification_report(valid_generator.classes, y_pred, target_names=target_names, output_dict=True)
 df = pd.DataFrame(report).transpose()
 df.to_csv(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models/Classification_report.csv')
