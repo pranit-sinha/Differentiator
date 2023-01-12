@@ -139,10 +139,6 @@ kldiv = kl_divergence(valid_generator.classes, y_pred)
 mse = mean_squared_error(valid_generator.classes, y_pred)
 pois = poisson(valid_generator.classes, y_pred)
 
-with open(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models/Other_metrics.txt', 'w+') as f:
-        f.write(f'KLD: {str(kldiv)}\n')
-        f.write(f'MSE: {str(mse)}\n')
-        f.write(f'POISSON: {str(pois)}\n')
 
 print("------------------------------------------")
 print(f'Supplimentary Data Saved')
