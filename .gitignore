@@ -9,3 +9,8 @@
 # Logs
 *.log
 *.log.*
+
+# CSVs etc
+*.csv
+*.tsv
+*.tab
