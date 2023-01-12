@@ -75,7 +75,7 @@ if not os.path.exists(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPa
 print("------------------------------------------")
 print(f'Training the model with {train_generator.samples} training samples and {valid_generator.samples} validation samples')
 print("------------------------------------------")
-history = model.fit(train_generator, validation_data = valid_generator, epochs=40)
+history = model.fit(train_generator, validation_data = valid_generator, epochs=20)
 
 # for layer in effnet.layers:
 #     if 'dense' in layer.name:
