@@ -134,11 +134,6 @@ report = classification_report(valid_generator.classes, y_pred, target_names=tar
 df = pd.DataFrame(report).transpose()
 df.to_csv(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models/Classification_report.csv')
 
-# Other metrics
-kldiv = kl_divergence(valid_generator.classes, y_pred)
-mse = mean_squared_error(valid_generator.classes, y_pred)
-pois = poisson(valid_generator.classes, y_pred)
-
 
 print("------------------------------------------")
 print(f'Supplimentary Data Saved')
