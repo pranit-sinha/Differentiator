@@ -34,14 +34,14 @@ datagen_train = ImageDataGenerator(rescale = 1.0/255.0,validation_split=0.2)
 # Training Data
 train_generator = datagen_train.flow_from_directory(
         data,
-        target_size=(300, 300),
+        target_size=(224, 224),
         batch_size=32,
         class_mode='categorical',
         subset = 'training')
 #Validation Data
 valid_generator = datagen_train.flow_from_directory(
         data,
-        target_size=(300, 300),
+        target_size=(224, 224),
         batch_size=32,
         class_mode='categorical',
         subset = 'validation',
@@ -51,7 +51,7 @@ valid_generator = datagen_train.flow_from_directory(
 effnet = EfficientNetB0(
         weights='imagenet',
         include_top=False,
-        input_shape=(300,300,3)
+        input_shape=(224,224,3)
         )
 for layer in effnet.layers:
         layer.trainable = True
@@ -127,7 +127,7 @@ conf_df = pd.DataFrame(confusion, index = ['wdoscc','mdoscc','pdoscc'], columns 
 conf_df.to_csv(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models/Confusion_matrix.csv')
 
 # classification report
-target_names = ['wdoscc','mdoscc','pdoscc']
+target_names = ['Cell Space','WhiteSpace']
 report = classification_report(valid_generator.classes, y_pred, target_names=target_names, output_dict=True)
 df = pd.DataFrame(report).transpose()
 df.to_csv(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models/Classification_report.csv')
