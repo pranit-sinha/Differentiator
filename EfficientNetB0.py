@@ -53,14 +53,14 @@ effnet = EfficientNetB0(
         include_top=False,
         input_shape=(224,224,3)
         )
-for layer in effnet.layers:
-        layer.trainable = True
-x = layers.Flatten()(effnet.output)
-x = layers.Dense(1024, activation = 'relu')(x)
-X = layers.Softmax()(x)
-model = Model(effnet.input, x)
-model.compile(optimizer = RMSprop(learning_rate = 0.0001), loss = 'categorical_crossentropy', metrics = ['acc'])
+model = Sequential()
+model.add(effnet)
+model.add(layers.GlobalMaxPooling2D(name="gap"))
 
+model.add(layers.Flatten(name="flatten"))
+model.add(layers.Dropout(0.2, name="dropout_out"))
+model.add(layers.Dense(256, activation='relu', name="fc1"))
+model.add(layers.Dense(['CellSpace','WhiteSpace'], activation='softmax', name="fc_out"))
 
 if not os.path.exists(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models'):
         os.makedirs(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models')
