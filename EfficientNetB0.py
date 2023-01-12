@@ -35,14 +35,14 @@ datagen_train = ImageDataGenerator(rescale = 1.0/255.0,validation_split=0.2)
 train_generator = datagen_train.flow_from_directory(
         data,
         target_size=(300, 300),
-        batch_size=100,
+        batch_size=32,
         class_mode='categorical',
         subset = 'training')
 #Validation Data
 valid_generator = datagen_train.flow_from_directory(
         data,
         target_size=(300, 300),
-        batch_size=100,
+        batch_size=32,
         class_mode='categorical',
         subset = 'validation',
         shuffle=False)
@@ -57,8 +57,7 @@ for layer in effnet.layers:
         layer.trainable = True
 x = layers.Flatten()(effnet.output)
 x = layers.Dense(1024, activation = 'relu')(x)
-x = layers.Dropout(0.2)(x)
-x = layers.Dense(3, activation = 'softmax')(x)
+X = layers.Softmax()(x)
 model = Model(effnet.input, x)
 model.compile(optimizer = RMSprop(learning_rate = 0.0001), loss = 'categorical_crossentropy', metrics = ['acc'])
 
@@ -74,7 +73,18 @@ if not os.path.exists(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPa
 print("------------------------------------------")
 print(f'Training the model with {train_generator.samples} training samples and {valid_generator.samples} validation samples')
 print("------------------------------------------")
-history = model.fit(train_generator, validation_data = valid_generator, epochs=50)
+history = model.fit(train_generator, validation_data = valid_generator, epochs=40)
+
+# for layer in effnet.layers:
+#     if 'dense' in layer.name:
+#         layer.trainable = True
+#     if 'softmax' in layer.name:
+#         layer.trainable = True
+#     else:
+#         layer.trainable = False
+
+# model.compile(optimizer = RMSprop(learning_rate = 0.0001), loss = 'categorical_crossentropy', metrics = ['acc'])
+# history = model.fit(train_generator, validation_data = valid_generator, epochs=40)
 
 print("------------------------------------------")
 print(f'Training Complete')
