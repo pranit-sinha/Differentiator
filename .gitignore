@@ -1,0 +1,11 @@
+# Images
+./DataSet
+*.tif
+*.jpg
+*.png
+*.gif
+
+
+# Logs
+*.log
+*.log.*
