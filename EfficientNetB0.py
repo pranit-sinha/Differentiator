@@ -53,6 +53,8 @@ effnet = EfficientNetB0(
         include_top=False,
         input_shape=(224,224,3)
         )
+for layer in effnet.layers:
+    layer.trainable = True
 model = Sequential()
 model.add(effnet)
 model.add(layers.GlobalMaxPooling2D(name="gap"))
@@ -73,42 +75,42 @@ if not os.path.exists(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPa
 print("------------------------------------------")
 print(f'Training the model with {train_generator.samples} training samples and {valid_generator.samples} validation samples')
 print("------------------------------------------")
-history = model.fit(train_generator, validation_data = valid_generator, epochs=40)
-
-# for layer in effnet.layers:
-#     if 'dense' in layer.name:
-#         layer.trainable = True
-#     if 'softmax' in layer.name:
-#         layer.trainable = True
-#     else:
-#         layer.trainable = False
-
-# model.compile(optimizer = RMSprop(learning_rate = 0.0001), loss = 'categorical_crossentropy', metrics = ['acc'])
 # history = model.fit(train_generator, validation_data = valid_generator, epochs=40)
 
-print("------------------------------------------")
-print(f'Training Complete')
-print("------------------------------------------")
-# Creating a directory to save the model paths 
+# # for layer in effnet.layers:
+# #     if 'dense' in layer.name:
+# #         layer.trainable = True
+# #     if 'softmax' in layer.name:
+# #         layer.trainable = True
+# #     else:
+# #         layer.trainable = False
 
-# Saving the model
-model.save(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models/dense121_01.h5')
-print("------------------------------------------")
-print(f'Model saved')
-print("------------------------------------------")
+# # model.compile(optimizer = RMSprop(learning_rate = 0.0001), loss = 'categorical_crossentropy', metrics = ['acc'])
+# # history = model.fit(train_generator, validation_data = valid_generator, epochs=40)
+
+# print("------------------------------------------")
+# print(f'Training Complete')
+# print("------------------------------------------")
+# # Creating a directory to save the model paths 
+
+# # Saving the model
+# model.save(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models/dense121_01.h5')
+# print("------------------------------------------")
+# print(f'Model saved')
+# print("------------------------------------------")
 
 
-#plotting the accuracy and loss
-print("------------------------------------------")
-print(f'Plotting and supplimentary data')
-print("------------------------------------------")
-plt.figure(figsize=(10, 10))
-plt.lineplot(history.history['acc'], label='Training Accuracy')
-plt.lineplot(history.history['val_acc'], label='Validation Accuracy')
-plt.title('Training and Validation Accuracy')
-plt.legend(['train', 'test'], loc='upper left')
-plt.tight_layout()
-plt.savefig(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models/Accuracy.jpg')
+# #plotting the accuracy and loss
+# print("------------------------------------------")
+# print(f'Plotting and supplimentary data')
+# print("------------------------------------------")
+# plt.figure(figsize=(10, 10))
+# plt.plot(history.history['loss'], label='Training Loss')
+# plt.plot(history.history['val_acc'], label='Validation Accuracy')
+# plt.title('Training and Validation Accuracy')
+# plt.legend(['train', 'test'], loc='upper left')
+# plt.tight_layout()
+# plt.savefig(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models/Accuracy.jpg')
 
 loaded_model = load_model(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models/dense121_01.h5')
 outcomes = loaded_model.predict(valid_generator)
