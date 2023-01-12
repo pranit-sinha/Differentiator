@@ -61,7 +61,7 @@ model.add(layers.Flatten(name="flatten"))
 model.add(layers.Dropout(0.2, name="dropout_out"))
 model.add(layers.Dense(256, activation='relu', name="fc1"))
 model.add(layers.Dense(2, activation='softmax', name="fc_out"))
-
+model.compile(optimizer = RMSprop(learning_rate = 0.0001), loss = 'categorical_crossentropy', metrics = ['acc'])
 if not os.path.exists(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models'):
         os.makedirs(f'/home/chs.rintu/Documents/chs-lab-ws02/research-cancerPathology/EffnetDifferentiator/models')
 # Model Summary
