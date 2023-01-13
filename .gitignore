@@ -2,7 +2,6 @@
 ./DataSet
 *.tif
 *.jpg
-*.png
 *.gif
 
 
