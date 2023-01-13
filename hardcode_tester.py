@@ -7,6 +7,7 @@ import pandas as pd
 
 def predict(path):
     image = Image.open(path)
+    image = image.resize((224, 224))
     # print(np.array(image).shape)
     image = np.array(image)
     imageR = image[:,:,0]

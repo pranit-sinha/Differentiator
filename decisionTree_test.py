@@ -25,6 +25,7 @@ conf_mat = confusion_matrix(y, predictions)
 print(conf_mat)
 conf_mat = pd.DataFrame(conf_mat, columns=['whiteSpace', 'cellSpace'], index=['whiteSpace', 'cellSpace'])
 conf_mat.to_csv('tester_confusion_matrix.csv')
+plt.figure(figsize=(10,10))
 sns.heatmap(conf_mat, annot=True, fmt='d')
 plt.savefig('tester_confusion_matrix.png')
 
